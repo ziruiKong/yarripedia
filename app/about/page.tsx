@@ -1,0 +1,4 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+export const metadata:Metadata={title:"关于百科"};
+export default function AboutPage(){return <main className="about-page"><div className="breadcrumbs"><Link href="/">首页</Link><span>›</span><b>关于百科</b></div><div className="home-kicker">ABOUT YARRIPEDIA</div><h1>关于雅礼百科全书</h1><p className="about-lead">雅礼百科全书（Yarripedia）是一部记录架空国家雅礼王国及其历史、制度与社会的中文百科全书。</p><section><h2>编辑原则</h2><p>条目以已提供的雅礼世界观设定为依据。资料尚不足以支持完整叙述时，页面会明确标记为“条目短小”，并避免将推测写成事实。</p><p>页面状态分为已确立、草稿与条目短小。已确立表示条目中的核心信息来自现有设定，不代表相关主题的所有细节均已补齐。</p></section><section><h2>如何扩展</h2><p>条目数据保存在项目的 <code>lib/data.ts</code>。每条内容包括标题、别名、分类、简述、编辑状态、正文与可选信息框。添加新条目后，它会自动出现在站内搜索和相应分类索引中。</p></section><section><h2>项目技术</h2><p>本网站使用 Next.js App Router、TypeScript、Tailwind CSS 与 Lucide 图标构建，初始条目数据存放在本地代码中，不依赖数据库或外部 API。</p></section></main>}
