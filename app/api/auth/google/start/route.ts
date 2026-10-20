@@ -30,10 +30,14 @@ export async function GET(request: NextRequest) {
     state,
   });
   const response = NextResponse.redirect(authorizationUrl);
+  const isSecure = request.nextUrl.protocol === "https:";
   response.cookies.set(STATE_COOKIE, JSON.stringify({ state, returnTo }), {
     httpOnly: true,
-    secure: request.nextUrl.protocol === "https:",
-    sameSite: "lax",
+    secure: isSecure,
+    // Browsers reject SameSite=None cookies delivered over plain HTTP. Local
+    // OAuth callbacks are top-level navigations, so Lax preserves the state
+    // cookie on localhost while hosted HTTPS keeps the cross-site setting.
+    sameSite: isSecure ? "none" : "lax",
     path: "/",
     maxAge: 600,
   });

@@ -1,6 +1,6 @@
 # Yarripedia（雅礼百科全书）
 
-一个以雅礼王国为主题的中文百科全书网站，使用 Next.js App Router、TypeScript、Tailwind CSS 和 Lucide 图标构建。基础条目存放在本地数据文件；Google 登录为可选配置，编辑记录保存到本地网站数据文件。
+一个以雅礼王国为主题的中文百科全书网站，使用 Next.js App Router、TypeScript、Tailwind CSS 和 Lucide 图标构建。基础条目存放在本地数据文件；Google 登录为可选配置，编辑记录在本地开发时写入回退文件，部署到 Sites 后写入 Cloudflare D1 云数据库。
 
 ## 安装与运行
 
@@ -26,7 +26,13 @@ pnpm start
 http://localhost:3000/api/auth/google/callback
 ```
 
-然后重启 `pnpm dev` 或 `pnpm start`。登录会通过 Google OpenID Connect 读取姓名、邮箱和头像；条目编辑及贡献记录保存在项目的 `.local-data/wiki-store.json`，不会同步到其他服务器实例。此文件已加入 `.gitignore`。
+然后重启 `pnpm dev` 或 `pnpm start`。登录会通过 Google OpenID Connect 读取姓名、邮箱和头像。部署到 Sites 时，`.openai/hosting.json` 中的 `d1: "DB"` 会为 worker 注入 D1 绑定，部署迁移 `drizzle/0000_amusing_phantom_reporter.sql` 后，条目编辑和贡献记录会写入云端并可在不同实例间共享；个人主页只读取当前登录用户的记录。未连接 D1 的本地开发环境会自动使用项目 `.local-data/wiki-store.json` 作为回退，此文件已加入 `.gitignore`。
+
+首次接入云端数据库时执行生成的迁移（部署平台会根据该文件应用）：
+
+```text
+drizzle/0000_amusing_phantom_reporter.sql
+```
 
 ## 条目数据
 

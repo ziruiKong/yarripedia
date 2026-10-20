@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+*.log
+.env*.local
+.local-data/
+
+work/
+
+dist/
+.wrangler/

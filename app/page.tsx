@@ -1,12 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { articles, articlePath, categoryInfo, type Category } from "@/lib/data";
+import LegalRegionsMap from "@/components/LegalRegionsMap";
 
 const categories: Category[] = ["政治", "王室", "历史", "地理", "经济", "教育", "军事", "人物", "文化"];
 const featured = [
   ["雅礼王冠", "the-crown-of-yarrie"],
   ["雅礼王国", "kingdom-of-yarrie"],
-  ["威廉五世", "william-v"],
+  ["奥斯温五世", "oswin-v"],
 ];
 
 export default function HomePage() {
@@ -39,35 +40,37 @@ export default function HomePage() {
       </div>
     </section>
 
+    <LegalRegionsMap />
+
     <div className="portal-home-grid">
       <div className="portal-home-primary">
         <section className="portal-section portal-featured-section">
           <div className="portal-section-title"><h2>典范条目</h2><span>精选阅读</span></div>
-          <Link className="portal-featured-entry" href={articlePath("kingdom-of-yarrie")}>
+          <a className="portal-featured-entry" href={articlePath("kingdom-of-yarrie")}>
             <span className="portal-featured-number">01</span>
             <span className="portal-featured-copy"><b>雅礼王国</b><small>Kingdom of Yarrie</small></span>
             <span className="portal-featured-more">阅读条目 →</span>
-          </Link>
-          <div className="portal-featured-links">{featured.map(([title, slug]) => <Link href={articlePath(slug)} key={slug}><b>{title}</b></Link>)}</div>
+          </a>
+          <div className="portal-featured-links">{featured.map(([title, slug]) => <a href={articlePath(slug)} key={slug}><b>{title}</b></a>)}</div>
           <p className="portal-inline-links"><b>分类：</b>{categories.map((category, index) => <span key={category}><Link href={`/category/${categoryInfo[category].slug}`}>{category}</Link>{index < categories.length - 1 ? "　·　" : ""}</span>)}</p>
         </section>
 
         <section className="portal-section portal-did-you-know">
           <div className="portal-section-title"><h2>你知道吗？</h2><Link href="/category/history">探索更多 →</Link></div>
-          <ul>{quickFacts.map((fact) => <li key={fact.slug}><span>•</span><p>{fact.text} <Link href={articlePath(fact.slug)}>{fact.title}</Link></p></li>)}</ul>
+          <ul>{quickFacts.map((fact) => <li key={fact.slug}><span>•</span><p>{fact.text} <a href={articlePath(fact.slug)}>{fact.title}</a></p></li>)}</ul>
         </section>
       </div>
 
       <aside className="portal-home-secondary">
         <section className="portal-section portal-news">
           <div className="portal-section-title"><h2>条目动态</h2><span>探索雅礼</span></div>
-          <ul>{featured.map(([title, slug]) => <li key={slug}><span>•</span><p><Link href={articlePath(slug)}>{title}</Link></p></li>)}</ul>
+          <ul>{featured.map(([title, slug]) => <li key={slug}><span>•</span><p><a href={articlePath(slug)}>{title}</a></p></li>)}</ul>
           <div className="portal-news-category"><b>正在探索：</b>{categories.slice(0, 4).map((category, index) => <span key={category}><Link href={`/category/${categoryInfo[category].slug}`}>{category}</Link>{index < 3 ? " · " : ""}</span>)}</div>
         </section>
 
         <section className="portal-section portal-history">
           <div className="portal-section-title"><h2>雅礼历史节点</h2><span>重要年表</span></div>
-          {history.map(([year, title, slug]) => <Link href={articlePath(slug)} key={slug}><time>{year}</time><span>{title}</span></Link>)}
+          {history.map(([year, title, slug]) => <a href={articlePath(slug)} key={slug}><time>{year}</time><span>{title}</span></a>)}
         </section>
       </aside>
     </div>
@@ -78,8 +81,8 @@ export default function HomePage() {
 
     <footer id="portal-footer" className="portal-footer">
       <div className="portal-about"><span className="portal-footer-mark"><Image src="/yarripedia-mark.png" alt="" width={1627} height={926} /></span><p>一部关于雅礼王国的协作式百科全书。<br />内容以已确立的世界观设定为基础。</p></div>
-      <Link href={articlePath("kingdom-of-yarrie")}><b>雅礼王国</b><small>国家概览</small></Link>
-      <Link href={articlePath("the-crown-of-yarrie")}><b>雅礼王冠</b><small>王室与宪制</small></Link>
+      <a href={articlePath("kingdom-of-yarrie")}><b>雅礼王国</b><small>国家概览</small></a>
+      <a href={articlePath("the-crown-of-yarrie")}><b>雅礼王冠</b><small>王室与宪制</small></a>
       <Link href="/about"><b>关于 Yarripedia</b><small>本站说明</small></Link>
     </footer>
   </main>;

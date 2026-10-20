@@ -111,4 +111,3 @@ export default function ProfileDashboard() {
     <section className="profile-history" id="history"><div className="profile-section-heading"><h2>修改记录</h2><span>云端公开记录 {orderedRevisions.length} 条</span></div>{orderedRevisions.length ? <ol>{orderedRevisions.map((revision, index) => <li id={`history-record-${index}`} key={`${revision.timestamp}-${revision.slug}-${index}`}><time dateTime={revision.timestamp}>{formatDateTime(revision.timestamp)}</time><Link href={articlePath(revision.slug)}>{revision.title}</Link><p>{revision.summary} · {revision.userName || "用户"}</p></li>)}</ol> : <div className="profile-empty">还没有修改记录。打开一个条目，点击“编辑”开始贡献。</div>}</section>
   </main>;
 }
-

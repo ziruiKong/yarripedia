@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import { Search } from "lucide-react";
 import { articles, articlePath } from "@/lib/data";
 import { fetchWikiStore } from "@/lib/localEdits";
@@ -28,9 +27,9 @@ export default function HomeSearchFocus() {
       <button aria-label="搜索" type="submit"><Search size={20} /></button>
     </form>
     {query.trim() && <div className="portal-search-results">
-      {results.length ? results.map((article) => <Link href={articlePath(article.slug)} key={article.slug}>
+      {results.length ? results.map((article) => <a href={articlePath(article.slug)} key={article.slug}>
         <span>{article.title}</span>
-      </Link>) : <p>没有找到相关条目</p>}
+      </a>) : <p>没有找到相关条目</p>}
     </div>}
   </div>;
 }

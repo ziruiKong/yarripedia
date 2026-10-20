@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { Check, Eye, FileEdit, Save, X } from "lucide-react";
 import { categoryInfo, type Article, type Category } from "@/lib/data";
 import type { LocalArticleEdit } from "@/lib/localEdits";
+import RichText from "@/components/RichText";
 
 const allCategories = Object.keys(categoryInfo) as Category[];
 
@@ -82,11 +83,11 @@ export default function ArticleEditor({
       <fieldset className="editor-categories"><legend>分类</legend>{allCategories.map((category) => <label key={category}><input type="checkbox" checked={categories.includes(category)} onChange={() => toggleCategory(category)} />{category}</label>)}</fieldset>
       <div className="editor-source-head"><label htmlFor="wiki-source">正文（维基文本）</label><button type="button" onClick={() => setPreview((value) => !value)}><Eye size={14} />{preview ? "编辑源码" : "预览"}</button></div>
       {preview ? <div className="editor-preview">
-        <p className="lead">{lead}</p>
-        {parsedSections.map((section, index) => <section key={`${section.heading}-${index}`}><h3>{section.heading}</h3>{section.paragraphs.map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{paragraph}</p>)}</section>)}
+        <p className="lead"><RichText text={lead} /></p>
+        {parsedSections.map((section, index) => <section key={`${section.heading}-${index}`}><h3>{section.heading}</h3>{section.paragraphs.map((paragraph, paragraphIndex) => <p key={paragraphIndex}><RichText text={paragraph} /></p>)}</section>)}
       </div> : <textarea id="wiki-source" className="editor-source" value={source} onChange={(event) => setSource(event.target.value)} spellCheck rows={16} placeholder={"== 概况 ==\n\n在这里编写条目正文。\n\n== 历史 ==\n\n使用双等号标记章节标题。"} />}
       <label className="editor-field editor-summary-field">编辑摘要<input value={editSummary} onChange={(event) => setEditSummary(event.target.value)} placeholder="简要说明你做了哪些更改" /></label>
-      <div className="editor-actions"><span>更改保存在本地网站中</span><button type="button" className="editor-cancel" onClick={onCancel}>取消</button><button type="submit" className="editor-save" disabled={!title.trim() || !lead.trim() || !categories.length || saving}><Save size={15} />{saving ? "保存中…" : "保存更改"}</button></div>
+      <div className="editor-actions"><span>更改会公开记录到云端</span><button type="button" className="editor-cancel" onClick={onCancel}>取消</button><button type="submit" className="editor-save" disabled={!title.trim() || !lead.trim() || !categories.length || saving}><Save size={15} />{saving ? "保存中…" : "保存更改"}</button></div>
     </form>
   </section>;
 }
